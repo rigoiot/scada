@@ -20,12 +20,12 @@ export interface ScadaMonitorProps {
   isRefresh?: boolean; // 刷新
   isFull?: boolean; // 全屏
   viewLoading: boolean;
-  queryDevicePropertiesDataReq: (val: any) => void;
-  setDeviceThingProperty: (val: any) => void;
-  subscribeProperty: (val: any) => void;
-  verifyScadaModelPassword: (val: any) => void;
-  queryAllNowProperties: (val: any) => void;
-  queryVideo: (val: any) => void;
-  queryView: (val: any) => void;
-  queryAccountWeChatConf: () => void;
+  queryDevicePropertiesDataReq?: (val: any) => void;
+  setDeviceThingProperty?: (val: any) => void;
+  subscribeProperty?: (val: any) => void;
+  verifyScadaModelPassword?: (val: any) => void;
+  queryAllNowProperties?: (val: any) => void;
+  queryVideo?: (val: any) => void;
+  queryView?: (val: any) => void;
+  queryAccountWeChatConf?: () => void;
 }
