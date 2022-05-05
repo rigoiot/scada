@@ -1,0 +1,64 @@
+@import '~antd/es/style/themes/default.less';
+
+.canvas {
+  width: 100%;
+  height: calc(100vh - 128px);
+}
+
+.scadaIcon {
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+  color: #a0a2ad;
+  font-size: 16px;
+  border: 1px solid #c4c6cf;
+  cursor: pointer;
+  display: none;
+  line-height: 28px;
+  background: #fff;
+  box-shadow: 0 0 2px #c4c6cf;
+  text-align: center;
+}
+
+.canvasTop {
+  height: 40px;
+  width: 100%;
+  text-align: right;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 999;
+}
+.iconExit {
+  font-size: 20px;
+  color: #a0a2ad;
+  margin: 5px;
+  cursor: pointer;
+  display: none;
+  text-align: center;
+  line-height: 30px;
+}
+.canvasMain:hover .scadaIcon,
+.canvasMain:hover .iconExit {
+  display: inline-block;
+}
+.videoImg,
+.backImg {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 999;
+  display: none;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+.backImg {
+  left: 50px;
+}
+.divImg:hover {
+  .videoImg,
+  .backImg {
+    display: block;
+  }
+}
