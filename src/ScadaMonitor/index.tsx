@@ -238,7 +238,7 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
         });
       if (temArr.length !== 0) {
         subProps.current = subscribeProperty({
-          equipmentID: subscribeID,
+          id: subscribeID,
           req: temArr,
         }).subscribe((response) => {
           const { data } = response;
