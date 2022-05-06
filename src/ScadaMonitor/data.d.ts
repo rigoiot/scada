@@ -19,6 +19,8 @@ export interface ScadaMonitorProps {
   isShare?: boolean; // 分享
   isRefresh?: boolean; // 刷新
   isFull?: boolean; // 全屏
+  isPannable?: boolean; // 是否移动
+  isScroll?: boolean; // 是否滚动
   viewLoading: boolean;
   queryDevicePropertiesDataReq?: (val: any) => void;
   setDeviceThingProperty?: (val: any) => void;

@@ -31,6 +31,8 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
     isShare = true,
     isRefresh = true,
     isFull = true,
+    isPannable = true,
+    isScroll = true,
     view,
     viewLoading,
     views,
@@ -358,8 +360,9 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
                 });
               }
             } else {
-              const { startTime, stopTime, pattern } =
-                queryPropertiesDataTime(element);
+              const { startTime, stopTime, pattern } = queryPropertiesDataTime(
+                element
+              );
               queryDevicePropertiesDataReq({
                 deviceId: propertys[val]?.deviceId,
                 identifiers: [propertys[val]?.identifier],
@@ -950,7 +953,8 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
     g2d.enableDashFlow();
     g2d.isMovable = () => false;
     g2d.fitContent(false, 0);
-    // g2d.setPannable(false);
+    g2d.setPannable(isPannable);
+    !isScroll && (g2d.handleScroll = function () {});
     // 监听退出全屏
     document.addEventListener("fullscreenchange", function (event) {
       const canvasFull = document.getElementById("canvasFull");
@@ -1011,8 +1015,9 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
                         data: data,
                         id: model.a("tslProperty")?.deviceId,
                         params: {
-                          [model.a("tslProperty")?.identifier]:
-                            model.a("downButVal"),
+                          [model.a("tslProperty")?.identifier]: model.a(
+                            "downButVal"
+                          ),
                         },
                       });
                     }
@@ -1024,8 +1029,9 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
                         data: data,
                         id: model.a("tslProperty")?.deviceId,
                         params: {
-                          [model.a("tslProperty")?.identifier]:
-                            model.a("upButVal"),
+                          [model.a("tslProperty")?.identifier]: model.a(
+                            "upButVal"
+                          ),
                         },
                       });
                     }
@@ -1212,7 +1218,7 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
       : document.getElementById("canvas")?.requestFullscreen();
   };
   return (
-    <>
+    <div className={styles.scadaMain}>
       <Spin spinning={modelLoading}>
         <div id="canvas" className={styles.canvasMain}>
           <div id="canvasTop" className={styles.canvasTop}>
@@ -1300,7 +1306,7 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
           accessToken={videoToken}
         />
       )}
-    </>
+    </div>
   );
 };
 export default ScadaMonitor;
