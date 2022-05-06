@@ -5,6 +5,7 @@ import styles from "./index.less";
 import Hls from "hls.js";
 import EZUIKit from "ezuikit-js";
 import moment from "moment";
+import resizeEvent from "element-resize-event";
 import PasswordModal from "./components/PasswordModal";
 import ShareModal from "./components/ShareModal";
 import WriteForm from "./components/WriteForm";
@@ -22,7 +23,6 @@ import { ScadaMonitorProps } from "./data";
 
 const ScadaMonitor = (props: ScadaMonitorProps) => {
   const {
-    collapsed,
     videoToken,
     scadaModelID,
     subscribeID,
@@ -117,6 +117,7 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
         getContainer: () => document.body,
       });
       localStorage.removeItem(cacheKey);
+      resizeEvent.unbind(document.getElementById("canvas"), () => {});
     };
   }, []);
 
@@ -127,12 +128,6 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
       setOnUpData(undefined);
     }
   }, [onUpData, onDownLoading]);
-
-  useEffect(() => {
-    DivRef.current.innerHTML = "";
-    g2d.addToDOM(DivRef.current);
-    handleChangeG2d();
-  }, [collapsed]);
 
   useEffect(() => setModelLoading(viewLoading), [viewLoading]);
 
@@ -946,6 +941,9 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
       dataModel.setBackground("#fff");
     }
     g2d.addToDOM(DivRef.current);
+    resizeEvent(document.getElementById("canvas"), () => {
+      g2d.fitContent(false, 0);
+    });
     handleChangeG2d();
   };
   // 画面自适应

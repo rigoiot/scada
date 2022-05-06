@@ -8,7 +8,6 @@ export interface View {
 }
 
 export interface ScadaMonitorProps {
-  collapsed: boolean;
   view: View;
   views: View[];
   videoToken: string;
