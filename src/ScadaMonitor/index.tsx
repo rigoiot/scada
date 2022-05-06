@@ -33,6 +33,8 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
     isFull = true,
     isPannable = true,
     isScroll = true,
+    isExit = true,
+    isFullRefresh = false,
     view,
     viewLoading,
     views,
@@ -1247,10 +1249,20 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
               )}
             </div>
             <div id="canvasExit" style={{ display: "none" }}>
-              <ShrinkOutlined
-                className={styles.iconExit}
-                onClick={() => handlerFull()}
-              />
+              {isFullRefresh && (
+                <span
+                  className={styles.scadaIcon}
+                  onClick={() => handlerRefresh()}
+                >
+                  <SyncOutlined />
+                </span>
+              )}
+              {isExit && (
+                <ShrinkOutlined
+                  className={styles.iconExit}
+                  onClick={() => handlerFull()}
+                />
+              )}
             </div>
           </div>
           <div ref={DivRef} className={styles.canvas}></div>
