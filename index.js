@@ -1,3 +1,3 @@
 import ScadaMonitor from "./src/ScadaMonitor";
 
-export default ScadaMonitor;
+module.exports = { ScadaMonitor };
