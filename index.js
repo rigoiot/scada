@@ -1,3 +1,1 @@
-import ScadaMonitor from "./src/ScadaMonitor";
-
-module.exports = { ScadaMonitor };
+module.exports = require("./src");
