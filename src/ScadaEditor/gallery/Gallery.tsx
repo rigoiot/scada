@@ -112,7 +112,7 @@ const Gallery: React.FC<ModalProps> = (props) => {
             ]
           : null
       }
-      className={type === "editor" ? styles.modal : styles.importModal}
+      className={type === "editor" ? styles.gallerymodal : styles.importModal}
     >
       <Tabs
         defaultActiveKey="1"
