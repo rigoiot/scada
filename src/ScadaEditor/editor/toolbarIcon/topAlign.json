@@ -1,0 +1,25 @@
+{
+  "background": "rgb(156,156,156)",
+  "width": 30,
+  "height": 20,
+  "comps": [
+    {
+      "type": "rect",
+      "borderWidth": 1,
+      "borderColor": "rgb(156,170,180)",
+      "rect": [7, 5.5, 6, 7]
+    },
+    {
+      "type": "rect",
+      "borderWidth": 1,
+      "borderColor": "rgb(156,170,180)",
+      "rect": [16, 5.5, 6, 12]
+    },
+    {
+      "type": "shape",
+      "borderWidth": 1,
+      "borderColor": "rgb(156,170,180)",
+      "points": [6.5, 3, 22, 3]
+    }
+  ]
+}

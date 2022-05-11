@@ -1,0 +1,11 @@
+{
+    "width": 100,
+    "height": 65,
+    "comps": [{
+        "type": "circle",
+        "background": "rgb(255,255,255)",
+        "borderWidth": 1,
+        "borderColor": "rgb(0,0,0)",
+        "borderWidthAbsolute": true
+    }]
+}

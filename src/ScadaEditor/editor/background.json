@@ -1,0 +1,15 @@
+{
+  "width": 1280,
+  "height": 720,
+  "comps": [
+    {
+      "type": "rect",
+      "background": {
+        "func": "style@background",
+        "value": "#ffffff"
+      },
+      "borderWidthAbsolute": true,
+      "rect": [0, 0, 1280, 720]
+    }
+  ]
+}

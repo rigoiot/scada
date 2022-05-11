@@ -1,0 +1,17 @@
+{
+  "width": 100,
+  "height": 65,
+  "comps": [{
+    "type": "rect",
+    "background": "rgb(255,255,255)",
+    "borderWidth": 1,
+    "borderColor": "rgb(0,0,0)",
+    "borderWidthAbsolute": true,
+    "rect": [
+      1.89338,
+      1.89338,
+      96.08909,
+      61.06154
+    ]
+  }]
+}

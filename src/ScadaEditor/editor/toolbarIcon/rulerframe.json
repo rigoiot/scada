@@ -1,0 +1,69 @@
+{
+  "background": "rgb(156,156,156)",
+  "width": 16,
+  "height": 16,
+  "blendMode": "override",
+  "comps": [
+    {
+      "type": "shape",
+      "borderWidth": 1,
+      "borderColor": "rgb(0,0,0)",
+      "points": [
+        1.41207,
+        14.42768,
+        1.41207,
+        1.41207,
+        14.48907,
+        1.41207
+      ]
+    },
+    {
+      "type": "shape",
+      "borderWidth": 1,
+      "borderColor": "rgb(0,0,0)",
+      "points": [
+        1.47347,
+        4.4204,
+        4.359,
+        4.4204,
+        4.359,
+        1.71904
+      ]
+    },
+    {
+      "type": "shape",
+      "borderWidth": 1,
+      "borderColor": "rgb(0,0,0)",
+      "points": [
+        9.8231,
+        1.53486,
+        9.8231,
+        4.60458
+      ]
+    },
+    {
+      "type": "shape",
+      "borderWidth": 1,
+      "borderColor": "rgb(0,0,0)",
+      "points": [
+        1.41207,
+        11.72633,
+        4.4204,
+        11.72633
+      ]
+    },
+    {
+      "type": "shape",
+      "borderWidth": 1,
+      "borderColor": "rgb(0,0,0)",
+      "points": [
+        4.91155,
+        13.99792,
+        14.2435,
+        13.99792,
+        14.2435,
+        5.03434
+      ]
+    }
+  ]
+}

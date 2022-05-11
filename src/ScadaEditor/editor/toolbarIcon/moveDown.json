@@ -1,0 +1,21 @@
+{
+  "background": "rgb(156,156,156)",
+  "width": 30,
+  "height": 20,
+  "comps": [
+    {
+      "type": "rect",
+      "borderWidth": 1,
+      "borderColor": "rgb(156,170,180)",
+      "background": "rgb(255,255,255)",
+      "rect": [8, 2, 8, 8]
+    },
+    {
+      "type": "rect",
+      "borderWidth": 1,
+      "borderColor": "rgb(156,170,180)",
+      "background": "rgb(232,235,238)",
+      "rect": [11, 5, 13, 13]
+    }
+  ]
+}

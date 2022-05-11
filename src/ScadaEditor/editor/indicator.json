@@ -1,0 +1,48 @@
+{
+  "width": 21,
+  "height": 21,
+  "comps": [
+    {
+      "type": "shape",
+      "background": {
+        "func": "__ht__function(data, view){return data.a('textData')&&data.a('textData').map(res => { if (res.condition.rule==='~'?eval(res.condition.rule + data.a('value')):eval(data.a('value') + res.condition.rule +  res.condition.num)) {return res&&res.label;}}).filter(res=>{return res !== undefined})[0]}",
+        "value": "#ff0000"
+      },
+      "borderWidth": 1,
+      "borderColor": "rgb(255,255,255)",
+      "fillRule": "evenodd",
+      "shadowColor": "#1ABC9C",
+      "points": [
+        10.5,
+        20.1141,
+        16.00776,
+        20.1141,
+        20.5,
+        15.79624,
+        20.5,
+        10.49934,
+        20.5,
+        5.20376,
+        16.00776,
+        0.88591,
+        10.5,
+        0.88591,
+        4.99224,
+        0.88591,
+        0.5,
+        5.20508,
+        0.5,
+        10.49934,
+        0.5,
+        15.79493,
+        4.99224,
+        20.1141,
+        10.5,
+        20.1141,
+        10.5,
+        20.1141
+      ],
+      "segments": [1, 4, 4, 4, 4, 2]
+    }
+  ]
+}

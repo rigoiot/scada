@@ -1,0 +1,30 @@
+{
+  "width": 60,
+  "height": 30,
+  "comps": [
+    {
+      "type": "text",
+      "text": {
+        "func": "__ht__function(data, view){return data.a('textData')&&data.a('textData').map(res => {if (res.condition.rule==='~'?eval(res.condition.rule + data.a('value')):eval(data.a('value') + res.condition.rule +  res.condition.num)) {return res&&res.label;}}).filter(res=>{return res !== undefined})[0]}",
+        "value": "Abc"
+      },
+      "color": {
+        "func": "__ht__function(data, view){  return data.a('textData')&&data.a('textData').map(res => { if (res.condition.rule==='~'?eval(res.condition.rule + data.a('value')):eval(data.a('value') + res.condition.rule +  res.condition.num)) {return res&&res.textColor;}}).filter(res=>{return res !== undefined})[0]||data.s('text.color')}",
+        "value": "#000"
+      },
+      "align": {
+        "func": "__ht__function(data, view){  return data.a('textData')&&data.a('textData').map(res => { if (res.condition.rule==='~'?eval(res.condition.rule + data.a('value')):eval(data.a('value') + res.condition.rule +  res.condition.num)) {return res&&res.align;}}).filter(res=>{return res !== undefined})[0]}",
+        "value": "left"
+      },
+      "vAlign": {
+        "func": "__ht__function(data, view){  return data.a('textData')&&data.a('textData').map(res => { if (res.condition.rule==='~'?eval(res.condition.rule + data.a('value')):eval(data.a('value') + res.condition.rule +  res.condition.num)) {return res&&res.vAlign;}}).filter(res=>{return res !== undefined})[0]}",
+        "value": "middle"
+      },
+      "font": {
+        "func": "__ht__function(data, view){  return data.a('textData')&&data.a('textData').map(res => { if (res.condition.rule==='~'?eval(res.condition.rule + data.a('value')):eval(data.a('value') + res.condition.rule +  res.condition.num)) {return res&&res.font;}}).filter(res=>{return res !== undefined})[0]}",
+        "value": "16px arial, sans-serif"
+      },
+      "rect": [0, 0, 60, 30]
+    }
+  ]
+}

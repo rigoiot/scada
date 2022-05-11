@@ -1,0 +1,21 @@
+{
+  "width": 40,
+  "height": 25,
+  "comps": [
+    {
+      "type": "rect",
+      "borderWidth": 0.5,
+      "borderColor": "#666",
+      "rect": [0, 0, 40, 25],
+      "background": "rgb(244,244,244)"
+    },
+    {
+      "type": "text",
+      "text": "123_",
+      "align": "center",
+      "font": "16px Times New Roman",
+      "color": "#0070cc",
+      "rect": [0, 0, 40, 25]
+    }
+  ]
+}

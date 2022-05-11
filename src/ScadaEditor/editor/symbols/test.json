@@ -1,0 +1,52 @@
+{
+    "width": 24,
+    "height": 52,
+    "comps": [{
+            "type": "shape",
+            "borderWidth": 2,
+            "borderColor": {
+                "func": "attr@background",
+                "value": "rgb(250,0,0)"
+            },
+            "shadowColor": "#1ABC9C",
+            "rotation": 5.26878,
+            "points": [
+                11,
+                30,
+                11,
+                9
+            ]
+        },
+        {
+            "type": "shape",
+            "borderWidth": 2,
+            "borderColor": {
+                "func": "attr@background",
+                "value": "rgb(250,0,0)"
+            },
+            "shadowColor": "#1ABC9C",
+            "rotation": 5.26878,
+            "points": [
+                -11,
+                30,
+                -11,
+                9
+            ]
+        }, {
+            "type": "shape",
+            "borderWidth": 2,
+            "borderColor": {
+                "func": "attr@background",
+                "value": "rgb(250,0,0)"
+            },
+            "shadowColor": "#1ABC9C",
+            "rotation": 0.72177,
+            "points": [
+                11,
+                30,
+                11,
+                9
+            ]
+        }
+    ]
+}

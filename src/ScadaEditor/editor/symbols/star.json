@@ -1,0 +1,19 @@
+{
+  "width": 100,
+  "height": 100,
+  "comps": [
+    {
+      "type": "star",
+      "background": "#3399FF",
+      "borderWidth": 1,
+      "borderColor": "#38373B",
+      "gradient": "linear.southwest",
+      "rect": [
+        0.93298,
+        2,
+        98.13405,
+        96.82447
+      ]
+    }
+  ]
+}

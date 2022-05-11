@@ -1,0 +1,28 @@
+{
+  "gridThickLinesEvery": 5,
+  "width": 100,
+  "height": 65,
+  "comps": [
+    {
+      "type": "shape",
+      "background": "rgb(255,255,255)",
+      "borderWidth": 2,
+      "borderColor": "rgb(0,0,0)",
+      "dashColor": null,
+      "borderWidthAbsolute": true,
+      "closePath": true,
+      "points": [
+        24.89123,
+        2.09133,
+        2.15724,
+        63,
+        75.17152,
+        62.86701,
+        97.90551,
+        1.95835,
+        97.90551,
+        1.82536
+      ]
+    }
+  ]
+}

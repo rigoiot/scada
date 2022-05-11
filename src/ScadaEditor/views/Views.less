@@ -1,0 +1,51 @@
+.leftTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 28px;
+  padding: 0 10px;
+  color: rgb(138, 138, 138);
+  line-height: 28px;
+  background-color: #f4f4f4;
+}
+.titleIcon {
+  color: #0070cc;
+  cursor: pointer;
+}
+.title {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.modal {
+  :global {
+    .ant-tabs {
+      overflow: inherit;
+    }
+    .ant-modal-body {
+      padding: 0;
+    }
+    .ant-tabs-nav-list {
+      margin-left: 24px;
+    }
+    .ant-tabs-content-holder {
+      padding: 0 24px 24px 24px;
+    }
+  }
+}
+.inputColor {
+  :global {
+    .ant-form-item-control-input-content > span {
+      width: 100%;
+      height: 32px;
+    }
+  }
+}
+.icon {
+  display: 'inline-block';
+  width: 21;
+  height: '24px';
+  line-height: '24px';
+  text-align: 'center';
+}

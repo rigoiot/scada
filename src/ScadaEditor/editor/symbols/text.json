@@ -1,0 +1,17 @@
+{
+  "width": 10,
+  "height": 10,
+  "comps": [
+    {
+      "type": "text",
+      "text": "A",
+      "align": "center",
+      "rect": [
+        0,
+        0,
+        10,
+        10
+      ]
+    }
+  ]
+}

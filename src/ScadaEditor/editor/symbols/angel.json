@@ -1,0 +1,20 @@
+{
+  "width": 100,
+  "height": 100,
+  "comps": [
+    {
+      "type": "arc",
+      "background": "#D8D8D8",
+      "borderWidth": 1,
+      "borderColor": "#979797",
+      "arcFrom": 0.41888,
+      "arcTo": 5.91668,
+      "rect": [
+        0,
+        0,
+        100,
+        97
+      ]
+    }
+  ]
+}

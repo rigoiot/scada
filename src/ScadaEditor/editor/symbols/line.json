@@ -1,0 +1,41 @@
+{
+  "gridThickLinesEvery": 5,
+  "width": 25,
+  "height": 25,
+  "comps": [
+    {
+      "type": "shape",
+      "background": {
+        "func": "style@background"
+      },
+      "borderWidth": {
+        "func": "style@borderWidth",
+        "value": 1
+      },
+      "borderColor": {
+        "func": "style@background",
+        "value": "#666"
+      },
+      "dashColor": {
+        "func": "style@borderColor",
+        "value": "#666"
+      },
+      "dash": {
+        "func": "style@dash"
+      },
+      "points": [3, 22, 22, 3]
+    },
+    {
+      "type": "circle",
+      "borderWidth": 1,
+      "background": "rgb(0,150,200)",
+      "rect": [0.5, 21.5, 3, 3]
+    },
+    {
+      "type": "circle",
+      "borderWidth": 1,
+      "background": "rgb(0,150,200)",
+      "rect": [21.5, 0.5, 3, 3]
+    }
+  ]
+}
