@@ -214,7 +214,11 @@ const TslPropertyTable: React.FC<ModalFormProps> = (props) => {
                 </Option>
               ))}
             </Select>
-            <Form.Item valuePropName="color" className={styles.inputColor}>
+            <Form.Item
+              valuePropName="color"
+              className={styles.inputColor}
+              style={{ width: "25%" }}
+            >
               <InputColor
                 color={value?.markColor || "#ff0000"}
                 onChange={(val) => {
