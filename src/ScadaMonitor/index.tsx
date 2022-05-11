@@ -473,7 +473,9 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
               });
               element.a("xAxisData", times);
               temVal.push({
-                name: `${j.deviceNickname}-${j.tslPropertyName}`,
+                name: j.deviceNickname
+                  ? `${j.deviceNickname}-${j.tslPropertyName}`
+                  : j.tslPropertyName,
                 data: values,
                 color: j.chartColor,
                 type: element.a("chartType") === "bar" ? "bar" : "line",
