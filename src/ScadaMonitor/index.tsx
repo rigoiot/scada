@@ -119,7 +119,7 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
         getContainer: () => document.body,
       });
       localStorage.removeItem(cacheKey);
-      resizeEvent.unbind(document.getElementById("canvas"), () => {});
+      resizeEvent.unbind(document.getElementById("canvas"), () => { });
     };
   }, []);
 
@@ -169,7 +169,7 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
     dataModel.clear();
     dataModel.setBackground(undefined);
     initEditor();
-  }, [data]);
+  }, [data, videoToken]);
 
   // 数据
   useEffect(() => {
@@ -484,19 +484,19 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
                 step: element.a("chartType") === "hv" ? true : false,
                 markLine: j.markLine?.markNum
                   ? {
-                      label: {
-                        formatter: j.markLine?.markData || j.markLine?.markNum,
-                        position: j.markLine?.markPosition || "insideEndTop",
+                    label: {
+                      formatter: j.markLine?.markData || j.markLine?.markNum,
+                      position: j.markLine?.markPosition || "insideEndTop",
+                    },
+                    lineStyle: {
+                      color: j.markLine?.markColor || "#FF0000",
+                    },
+                    data: [
+                      {
+                        yAxis: j.markLine?.markNum,
                       },
-                      lineStyle: {
-                        color: j.markLine?.markColor || "#FF0000",
-                      },
-                      data: [
-                        {
-                          yAxis: j.markLine?.markNum,
-                        },
-                      ],
-                    }
+                    ],
+                  }
                   : false,
               });
               element.a("dataset", temVal);
@@ -867,7 +867,7 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
           div.className = styles.divImg;
           div.style.cssText = `position:relative;height:${
             item.getHeight() + "px"
-          };width:${item.getWidth() + "px"};background:#000`;
+            };width:${item.getWidth() + "px"};background:#000`;
           node.setHtml(div);
           dataModel.remove(item);
           dataModel.add(node);
@@ -956,7 +956,7 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
     g2d.isMovable = () => false;
     g2d.fitContent(false, 0);
     g2d.setPannable(isPannable);
-    !isScroll && (g2d.handleScroll = function () {});
+    !isScroll && (g2d.handleScroll = function () { });
     // 监听退出全屏
     document.addEventListener("fullscreenchange", function (event) {
       const canvasFull = document.getElementById("canvasFull");
@@ -1142,8 +1142,8 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
                         res.condition.rule === "~"
                           ? eval(res.condition.rule + rs.value)
                           : eval(
-                              rs.value + res.condition.rule + res.condition.num
-                            )
+                            rs.value + res.condition.rule + res.condition.num
+                          )
                       ) {
                         return res && res.label;
                       }
@@ -1158,7 +1158,7 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
           }
           if (
             model.a("showRuleTslProperty")?.tslPropertyId ===
-              rs.tslPropertyID &&
+            rs.tslPropertyID &&
             model.a("showRuleTslProperty")?.deviceId === rs.deviceID &&
             model.a("show") === "ruleShow"
           ) {
@@ -1171,19 +1171,19 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
               if (
                 showRule.logic === "none"
                   ? eval(
-                      Number(rs.value) +
-                        showRule.ruleOne?.rule +
-                        showRule.ruleOne?.num
-                    )
+                    Number(rs.value) +
+                    showRule.ruleOne?.rule +
+                    showRule.ruleOne?.num
+                  )
                   : eval(
-                      Number(rs.value) +
-                        showRule.ruleOne?.rule +
-                        showRule.ruleOne?.num +
-                        showRule.logic +
-                        Number(rs.value) +
-                        showRule.ruleTwo?.rule +
-                        showRule.ruleTwo?.num
-                    )
+                    Number(rs.value) +
+                    showRule.ruleOne?.rule +
+                    showRule.ruleOne?.num +
+                    showRule.logic +
+                    Number(rs.value) +
+                    showRule.ruleTwo?.rule +
+                    showRule.ruleTwo?.num
+                  )
               ) {
                 model.s("2d.visible", true);
               } else {
