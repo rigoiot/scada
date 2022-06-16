@@ -208,8 +208,10 @@ const Index: React.FC<ScadaEditorProps> = (props) => {
             getRotation: () => any;
             getHeight: () => any;
             getWidth: () => any;
+            getParent: () => any;
           }) => {
             const position = sm.getPosition();
+            const parent= sm.getParent();
             const node = new (sm instanceof ht.Text
               ? ht.Text
               : sm instanceof ht.Shape
@@ -236,6 +238,7 @@ const Index: React.FC<ScadaEditorProps> = (props) => {
             } else {
               node.setImage(sm.getImage());
             }
+            node.setParent(parent);
             node.setStyleMap(Copy(sm.getStyleMap()));
             node.setRotation(sm.getRotation());
             node.s("label", "");
