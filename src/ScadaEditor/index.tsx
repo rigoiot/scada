@@ -1979,6 +1979,17 @@ const Index: React.FC<ScadaEditorProps> = (props) => {
         bagNode.setImage(require("./editor/background.json"));
         bagNode.s("background", value.bagColor || "#ffffff");
       }
+      dataModel
+      .toDatas((item: any) => item.getTag() && item.getTag().indexOf('block') !== -1)
+      .toList()
+      .forEach((element: any) => {
+        element.setWidth(width);
+        element.setHeight(height);
+        element.p({
+          x: 0,
+          y: 0,
+        });
+      });
     } else {
       node.a("show", value.show || "show");
       node.a("showRule", {
