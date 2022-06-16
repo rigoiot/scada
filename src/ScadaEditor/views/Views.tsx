@@ -302,7 +302,7 @@ const Views: React.FC<Props> = (props) => {
     });
   };
   return (
-    <div>
+    <div className={styles.viewMenu}>
       <h4 className={styles.leftTitle}>
         画面
         <DoubleLeftOutlined

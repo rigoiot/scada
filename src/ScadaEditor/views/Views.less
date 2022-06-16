@@ -1,23 +1,39 @@
-.leftTitle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 28px;
-  padding: 0 10px;
-  color: rgb(138, 138, 138);
-  line-height: 28px;
-  background-color: #f4f4f4;
+.viewMenu {
+  :global {
+    .ant-tree-node-content-wrapper {
+      display: inline-block;
+      width: calc(100% - 48px);
+    }
+  }
+  .leftTitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 28px;
+    padding: 0 10px;
+    color: rgb(138, 138, 138);
+    line-height: 28px;
+    background-color: #f4f4f4;
+  }
+  .titleIcon {
+    color: #0070cc;
+    cursor: pointer;
+  }
+  .title {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .icon {
+    display: 'inline-block';
+    width: 21;
+    height: '24px';
+    line-height: '24px';
+    text-align: 'center';
+  }
 }
-.titleIcon {
-  color: #0070cc;
-  cursor: pointer;
-}
-.title {
-  display: inline-block;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
+
 .modal {
   :global {
     .ant-tabs {
@@ -41,11 +57,4 @@
       height: 32px;
     }
   }
-}
-.icon {
-  display: 'inline-block';
-  width: 21;
-  height: '24px';
-  line-height: '24px';
-  text-align: 'center';
 }
