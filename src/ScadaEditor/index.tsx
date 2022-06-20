@@ -606,6 +606,8 @@ const Index: React.FC<ScadaEditorProps> = (props) => {
     "v",
     28
   );
+  propertySplit.setTogglable(false);
+  propertySplit.setDraggable(false);
   const frameDiv = document.createElement("div");
   frameDiv.className = styles.views;
   const formPane = new ht.widget.FormPane();

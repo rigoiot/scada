@@ -1,8 +1,16 @@
 .viewMenu {
+  height: 100%;
   :global {
     .ant-tree-node-content-wrapper {
       display: inline-block;
       width: calc(100% - 48px);
+    }
+    .ant-tree{
+      height: calc(100% - 38px);
+    }
+    .ant-tree-list{
+      height: 100%;
+      overflow: auto;
     }
   }
   .leftTitle {

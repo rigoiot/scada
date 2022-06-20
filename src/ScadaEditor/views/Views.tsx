@@ -320,7 +320,6 @@ const Views: React.FC<Props> = (props) => {
           }}
           treeData={treeData}
           blockNode={true}
-          height={180}
           icon={false}
           defaultExpandAll
           selectedKeys={[selectedKey]}
