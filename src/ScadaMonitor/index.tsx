@@ -215,16 +215,16 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
               if (
                 temArr
                   .find((ie) => ie.deviceID === propertys[val].deviceId)
-                  .tslPropertyIDs.indexOf(propertys[val].tslPropertyId) === -1
+                  .identifiers.indexOf(propertys[val].identifier) === -1
               ) {
                 temArr
                   .find((ie) => ie.deviceID === propertys[val].deviceId)
-                  .tslPropertyIDs.push(propertys[val].tslPropertyId);
+                  .identifiers.push(propertys[val].identifier);
               }
             } else if (propertys[val].deviceId) {
               temArr.push({
                 deviceID: propertys[val].deviceId,
-                tslPropertyIDs: [propertys[val].tslPropertyId],
+                identifiers: [propertys[val].identifier],
               });
             }
           }
@@ -333,7 +333,7 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
                 const temArr = dest.map((rs) => {
                   return {
                     deviceID: rs?.deviceId,
-                    tslPropertyIDs: rs?.tslPropertyIDs,
+                    identifiers: rs?.identifier,
                   };
                 });
                 queryAllNowProperties(temArr).then((rs) => {
@@ -346,7 +346,7 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
                     const temObj = data?.payload?.results?.filter(
                       (rs: any) =>
                         rs.deviceID === item.deviceId &&
-                        rs.tslPropertyID === item.tslPropertyId
+                        rs.identifier === item.identifier
                     )[0];
                     resultArr.push({
                       name: item?.tslPropertyName,
@@ -985,18 +985,18 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
   const updateEditor = (
     data: {
       results: {
-        tslPropertyID: any;
-        deviceID: any;
+        identifier: string;
+        deviceID: string;
         value: any;
       }[];
     },
     arrNodes: any[]
   ) => {
     data?.results?.forEach(
-      (rs: { tslPropertyID: any; deviceID: any; value: any }) => {
+      (rs: { identifier: any; deviceID: any; value: any }) => {
         arrNodes?.forEach((model: any) => {
           if (
-            model.a("tslProperty")?.tslPropertyId === rs.tslPropertyID &&
+            model.a("tslProperty")?.identifier === rs.identifier &&
             model.a("tslProperty")?.deviceId === rs.deviceID
           ) {
             if (model.a("JSFunc") && model.a("JSFuncCheck")) {
@@ -1157,8 +1157,8 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
             }
           }
           if (
-            model.a("showRuleTslProperty")?.tslPropertyId ===
-            rs.tslPropertyID &&
+             model.a("showRuleTslProperty")?.identifier ===
+            rs.identifier &&
             model.a("showRuleTslProperty")?.deviceId === rs.deviceID &&
             model.a("show") === "ruleShow"
           ) {
