@@ -693,26 +693,18 @@ const Index: React.FC<ScadaEditorProps> = (props) => {
               payload: { results },
             },
           } = rs;
-          for (let i = 0; i < results?.length; i++) {
-            try {
-              results[i].userComponentData.indexOf(".json") === -1
-                ? (results[i].image = results[i].userComponentData)
-                : await request
-                    .get(results[i].userComponentData)
-                    .then((response) => {
-                      if (response instanceof Object) {
-                        results[i].image = results[i].userComponentData.split(
-                          "?"
-                        )[0];
-                      } else {
-                        results[i].image = response;
-                      }
-                    });
-            } catch (error) {
-              message.error("组件加载失败！");
-            }
-          }
-          setUserComponents(results || []);
+          Promise.all(results.map((res) => request.get(res.userComponentData,{timeout:10000}).catch(e=>e))).then(item=>{
+            const temData=[];
+            item?.forEach((r,index)=>{
+                temData.push({
+                  ...results[index],
+                  image:(r instanceof Object)? results[index].userComponentData.split(
+                    "?"
+                  )[0]:r
+                });
+            })
+            setUserComponents(temData || []);
+          }).catch(() => message.error("组件加载异常！"));
         })
         .catch(() => message.error("组件加载失败"));
     });
@@ -753,7 +745,7 @@ const Index: React.FC<ScadaEditorProps> = (props) => {
   }, [scadaGroups]);
   // 处理组件数据
   const componentsData = async (val: any[]) => {
-    Promise.all(val.map((rs) => request.get(rs.componentData)))
+    Promise.all(val.map((rs) => request.get(rs.componentData,{timeout:10000}).catch(e=>e)))
       .then((rs) => {
         const data: any[] = [];
         let c: {
