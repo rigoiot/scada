@@ -31,4 +31,5 @@ export interface ScadaMonitorProps {
   queryVideo?: (val: any) => void;
   queryView?: (val: any) => void;
   queryAccountWeChatConf?: () => void;
+  queryAllDeviceAkiras?: (val: any) => void;
 }

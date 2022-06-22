@@ -46,6 +46,7 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
     queryVideo,
     queryView,
     queryAccountWeChatConf,
+    queryAllDeviceAkiras,
   } = props;
   const DivRef = useRef();
   const [dataModel] = useState(new ht.DataModel());
@@ -70,6 +71,8 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
   const g2dRef = useRef<any>();
   const hlsRef = useRef<any>([]);
   const pageTimerRef = useRef({});
+  // 晃电记录
+  const [isAkiras, setIsAkiras] = useState<boolean>(false);
 
   // iframe
   ht.Default.setImage("iframe", {
@@ -119,7 +122,7 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
         getContainer: () => document.body,
       });
       localStorage.removeItem(cacheKey);
-      resizeEvent.unbind(document.getElementById("canvas"), () => { });
+      document.getElementById("canvas")&& resizeEvent?.unbind(document.getElementById("canvas"), () => { });
     };
   }, []);
 
@@ -230,22 +233,63 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
           }
         });
       }
-      status &&
-        queryAllNowProperties(temArr).then((rs) => {
-          const { data } = rs;
-          updateEditor(data.payload, temNodes);
-        });
-      if (temArr.length !== 0) {
-        subProps.current = subscribeProperty({
-          id: subscribeID,
-          req: temArr,
-        }).subscribe((response) => {
-          const { data } = response;
-          updateEditor(data.payload, temNodes);
-        });
+      if(temArr.length !== 0){
+        if(isAkiras){
+          getAllDeviceAkiras({current:1,did:temArr[0]?.deviceID},temNodes);
+        }else {
+          status &&
+          queryAllNowProperties(temArr).then((rs) => {
+            const { data } = rs;
+            updateEditor(data.payload?.results, temNodes);
+          });
+          subProps.current = subscribeProperty({
+            id: subscribeID,
+            req: temArr,
+          }).subscribe((response) => {
+            const { data } = response;
+            updateEditor(data.payload?.results, temNodes);
+          });
+        }
       }
     }
-  }, [propertys, tslPropertyNodes, tabSwitch]);
+  }, [propertys, tslPropertyNodes, tabSwitch,isAkiras]);
+
+  // 晃电记录
+  const getAllDeviceAkiras=(val:{current:number,did:string},nodes:any[])=>{
+    queryAllDeviceAkiras({pageSize:1,...val}).then(rs=>{
+      const {data,total}=rs;
+      const temData=data[0]?.data?.map((item: any)=>({...item,deviceID:data[0]?.deviceID}));
+      updateEditor(temData, nodes);
+      nodes.forEach(res=>{
+        switch (res.getTag()){
+          case "total":
+            res.s("text", total);
+            break;
+          case "currentPage":
+              res.s("text", total?val.current:0);
+            break;
+          case "nextPage":
+            res.s("interactive", true);
+            res.s(
+              "onDown",
+              function () {
+                val.current<total&&getAllDeviceAkiras({current:val.current+1,did:val.did},nodes);
+              }
+            );
+            break;
+            case "previousPage":
+            res.s("interactive", true);
+            res.s(
+              "onDown",
+              function () {
+                val.current>1&&getAllDeviceAkiras({current:val.current-1,did:val.did},nodes);
+              }
+            );
+            break;
+        }
+      })
+    });
+  }
 
   // 曲线
   useEffect(() => {
@@ -934,6 +978,7 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
         })
         .toList()
     );
+    setIsAkiras(dataModel.getDataByTag("nextPage"));
     ht.Style["select.color"] = "rgba(26,188,156,0)";
     if (dataModel.getDataByTag("background")) {
       const bagNode = dataModel.getDataByTag("background");
@@ -984,15 +1029,13 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
   // 实时更改数据
   const updateEditor = (
     data: {
-      results: {
         identifier: string;
         deviceID: string;
         value: any;
-      }[];
-    },
+      }[],
     arrNodes: any[]
   ) => {
-    data?.results?.forEach(
+    data?.forEach(
       (rs: { identifier: any; deviceID: any; value: any }) => {
         arrNodes?.forEach((model: any) => {
           if (
