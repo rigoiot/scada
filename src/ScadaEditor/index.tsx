@@ -693,7 +693,7 @@ const Index: React.FC<ScadaEditorProps> = (props) => {
               payload: { results },
             },
           } = rs;
-          Promise.all(results.map((res) => request.get(res.userComponentData,{timeout:10000}).catch(e=>e))).then(item=>{
+          results?Promise.all(results.map((res) => request.get(res.userComponentData,{timeout:10000}).catch(e=>e))).then(item=>{
             const temData=[];
             item?.forEach((r,index)=>{
                 temData.push({
@@ -704,7 +704,7 @@ const Index: React.FC<ScadaEditorProps> = (props) => {
                 });
             })
             setUserComponents(temData || []);
-          }).catch(() => message.error("组件加载异常！"));
+          }).catch(() => message.error("组件加载异常！")):setUserComponents([]);
         })
         .catch(() => message.error("组件加载失败"));
     });
