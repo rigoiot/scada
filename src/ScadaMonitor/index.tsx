@@ -233,8 +233,7 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
         });
       }
       if(temVoltageShock.length !== 0){
-        const vTemNodes=temNodes.filter(i=>i.a("type")==="voltageShock");
-          getAllDeviceAkiras({current:1,did:temVoltageShock[0]?.deviceID},vTemNodes);
+          getAllDeviceAkiras({current:1,did:temVoltageShock[0]?.deviceID},temNodes);
       }
       if(temArr.length !== 0) {
         const nvTemNodes=temNodes.filter(i=>i.a("type")!=="voltageShock");
@@ -256,10 +255,11 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
 
   // 晃电记录
   const getAllDeviceAkiras=(val:{current:number,did:string},nodes:any[])=>{
+    const vTemNodes=nodes.filter(i=>i.a("type")==="voltageShock");
     queryAllDeviceAkiras({pageSize:1,...val}).then(rs=>{
       const {data,total}=rs;
       const temData=data[0]?.data?.map((item: any)=>({...item,deviceID:data[0]?.deviceID}));
-      updateEditor(temData, nodes);
+      updateEditor(temData, vTemNodes);
       nodes.forEach(res=>{
         switch (res.getTag()){
           case "total":
