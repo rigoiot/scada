@@ -1159,6 +1159,9 @@ const Index: React.FC<ScadaEditorProps> = (props) => {
           case "dataBind":
             node.setImage(require("./editor/symbols/dataBind.json"));
             break;
+          case "voltageShock":
+            node.setImage(require("./editor/symbols/dataBind.json"));
+            break;
           case "chart":
             node.setImage(require("../asset/smChart.png"));
             break;
@@ -1420,6 +1423,16 @@ const Index: React.FC<ScadaEditorProps> = (props) => {
         };
         break;
       case "dataBind":
+        setValues({
+          ...value,
+          ...dataBindVal,
+        });
+        temValue = {
+          ...value,
+          ...dataBindVal,
+        };
+        break;
+      case "voltageShock":
         setValues({
           ...value,
           ...dataBindVal,
@@ -1793,6 +1806,14 @@ const Index: React.FC<ScadaEditorProps> = (props) => {
           node.setImage(image);
           node.setTag(item.tag);
           break;
+        case "voltageShock":
+          node.a("nameCheck", true);
+          node.a("unitCheck", true);
+          node.a("valName", "变量名称");
+          node.a("dataFormat", "##.#");
+          node.setImage(image);
+          node.setTag(item.tag);
+          break;
         default:
           node.setImage(image);
           node.setTag(item.tag);
@@ -2023,6 +2044,17 @@ const Index: React.FC<ScadaEditorProps> = (props) => {
           node.a("unit", value.unit);
           node.a("unitCheck", value.unitCheck);
           break;
+          case "voltageShock":
+            node.a("dataFormat", value.dataFormat);
+            node.a("JSFunc", value.JSFunc);
+            node.a("JSFuncCheck", value.JSFuncCheck);
+            node.a("RW", value.RW);
+            node.a("passwordChecked", value.passwordChecked);
+            node.a("nameCheck", value.nameCheck);
+            node.a("valName", value.valName);
+            node.a("unit", value.unit);
+            node.a("unitCheck", value.unitCheck);
+            break;
         case "time":
           node.a("dateCheck", value.dateCheck);
           node.a("dateFormat", value.dateFormat);

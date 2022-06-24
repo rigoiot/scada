@@ -61,6 +61,7 @@ const noArr = [
   "viewBtn",
   "viewHandle",
   "flow",
+  "voltageShock"
 ];
 const validity = [
   { value: "3600", label: "1小时" },
@@ -343,7 +344,7 @@ const GeneralModal: React.FC<ModalFormProps> = (props) => {
               {!values.dataModel && (
                 <>
                   <Row gutter={24}>
-                    {["switch", "button", "dataBind", "flow"]
+                    {["switch", "button", "dataBind","voltageShock", "flow"]
                       .toString()
                       .indexOf(values.type) !== -1 && (
                       <Col span={24}>
@@ -1007,7 +1008,7 @@ const GeneralModal: React.FC<ModalFormProps> = (props) => {
                     </Row>
                   )}
                   {(values.text ||
-                    ["dataBind", "button", "viewBtn", "viewHandle"].indexOf(
+                    ["voltageShock","dataBind", "button", "viewBtn", "viewHandle"].indexOf(
                       values.type
                     ) !== -1) && (
                     <Row gutter={24}>
@@ -1028,7 +1029,7 @@ const GeneralModal: React.FC<ModalFormProps> = (props) => {
                           </FormItem>
                         </Col>
                       )}
-                      {values.type !== "dataBind" && (
+                      {!["voltageShock","dataBind"].includes(values.type) && (
                         <Col span={isModal ? 12 : 24}>
                           <FormItem
                             name="text"
@@ -1039,7 +1040,7 @@ const GeneralModal: React.FC<ModalFormProps> = (props) => {
                           </FormItem>
                         </Col>
                       )}
-                      {values.type === "dataBind" && (
+                      {["voltageShock","dataBind"].includes(values.type) && (
                         <>
                           <Col span={24}>
                             <FormItem name="RW">
@@ -1170,7 +1171,7 @@ const GeneralModal: React.FC<ModalFormProps> = (props) => {
                           <Input />
                         </FormItem>
                       </Col>
-                      {values.type === "dataBind" && (
+                      {["voltageShock","dataBind"].includes(values.type) && (
                         <>
                           <Col span={12} className={styles.inputColor}>
                             <FormItem
@@ -1276,14 +1277,14 @@ const GeneralModal: React.FC<ModalFormProps> = (props) => {
                 />
               </TabPane>
             )}
-            {["switch", "button", "dataBind", "viewBtn"]
+            {["switch", "button", "dataBind","voltageShock", "viewBtn"]
               .toString()
               .indexOf(values.type) !== -1 && (
               <TabPane
                 tab="控制设置"
                 key="3"
                 disabled={
-                  (RW !== "W" && values.type === "dataBind") ||
+                  (RW !== "W" && ["voltageShock","dataBind"].includes(values.type)) ||
                   pwSet === "reset"
                 }
               >

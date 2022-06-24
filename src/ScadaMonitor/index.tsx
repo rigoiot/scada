@@ -71,8 +71,6 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
   const g2dRef = useRef<any>();
   const hlsRef = useRef<any>([]);
   const pageTimerRef = useRef({});
-  // 晃电记录
-  const [isAkiras, setIsAkiras] = useState<boolean>(false);
 
   // iframe
   ht.Default.setImage("iframe", {
@@ -201,6 +199,7 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
           }
         });
       const temArr: any[] = [];
+      const temVoltageShock: any[] = [];
       for (const val in propertys) {
         temNodes?.forEach((element: any) => {
           if (
@@ -211,21 +210,21 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
               ? element.a("showRuleTslProperty", propertys[val])
               : element.a("tslProperty", propertys[val]);
             if (
-              temArr.findIndex(
+              (element.a("type")==="voltageShock"?temVoltageShock:temArr).findIndex(
                 (ie) => ie.deviceID === propertys[val].deviceId
               ) !== -1
             ) {
               if (
-                temArr
+                (element.a("type")==="voltageShock"?temVoltageShock:temArr)
                   .find((ie) => ie.deviceID === propertys[val].deviceId)
-                  .identifiers.indexOf(propertys[val].identifier) === -1
+                  ?.identifiers?.indexOf(propertys[val]?.identifier) === -1
               ) {
-                temArr
+                (element.a("type")==="voltageShock"?temVoltageShock:temArr)
                   .find((ie) => ie.deviceID === propertys[val].deviceId)
-                  .identifiers.push(propertys[val].identifier);
+                  ?.identifiers?.push(propertys[val].identifier);
               }
             } else if (propertys[val].deviceId) {
-              temArr.push({
+              (element.a("type")==="voltageShock"?temVoltageShock:temArr).push({
                 deviceID: propertys[val].deviceId,
                 identifiers: [propertys[val].identifier],
               });
@@ -233,26 +232,27 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
           }
         });
       }
-      if(temArr.length !== 0){
-        if(isAkiras){
-          getAllDeviceAkiras({current:1,did:temArr[0]?.deviceID},temNodes);
-        }else {
-          status &&
-          queryAllNowProperties(temArr).then((rs) => {
-            const { data } = rs;
-            updateEditor(data.payload?.results, temNodes);
-          });
-          subProps.current = subscribeProperty({
-            id: subscribeID,
-            req: temArr,
-          }).subscribe((response) => {
-            const { data } = response;
-            updateEditor(data.payload?.results, temNodes);
-          });
-        }
+      if(temVoltageShock.length !== 0){
+        const vTemNodes=temNodes.filter(i=>i.a("type")==="voltageShock");
+          getAllDeviceAkiras({current:1,did:temVoltageShock[0]?.deviceID},vTemNodes);
+      }
+      if(temArr.length !== 0) {
+        const nvTemNodes=temNodes.filter(i=>i.a("type")!=="voltageShock");
+        status &&
+        queryAllNowProperties(temArr).then((rs) => {
+          const { data } = rs;
+          updateEditor(data.payload?.results, nvTemNodes);
+        });
+        subProps.current = subscribeProperty({
+          id: subscribeID,
+          req: temArr,
+        }).subscribe((response) => {
+          const { data } = response;
+          updateEditor(data.payload?.results, nvTemNodes);
+        });
       }
     }
-  }, [propertys, tslPropertyNodes, tabSwitch,isAkiras]);
+  }, [propertys, tslPropertyNodes, tabSwitch]);
 
   // 晃电记录
   const getAllDeviceAkiras=(val:{current:number,did:string},nodes:any[])=>{
@@ -978,7 +978,6 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
         })
         .toList()
     );
-    setIsAkiras(dataModel.getDataByTag("nextPage"));
     ht.Style["select.color"] = "rgba(26,188,156,0)";
     if (dataModel.getDataByTag("background")) {
       const bagNode = dataModel.getDataByTag("background");
