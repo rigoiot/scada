@@ -222,11 +222,15 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
                 (element.a("type")==="voltageShock"?temVoltageShock:temArr)
                   .find((ie) => ie.deviceID === propertys[val].deviceId)
                   ?.identifiers?.push(propertys[val].identifier);
+                  (element.a("type")==="voltageShock"?temVoltageShock:temArr)
+                  .find((ie) => ie.deviceID === propertys[val].deviceId)
+                  ?.tslPropertyIDs?.push(propertys[val].tslPropertyId);
               }
             } else if (propertys[val].deviceId) {
               (element.a("type")==="voltageShock"?temVoltageShock:temArr).push({
                 deviceID: propertys[val].deviceId,
                 identifiers: [propertys[val].identifier],
+                tslPropertyIDs:[propertys[val].tslPropertyId],
               });
             }
           }
@@ -238,16 +242,31 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
       if(temArr.length !== 0) {
         const nvTemNodes=temNodes.filter(i=>i.a("type")!=="voltageShock");
         status &&
-        queryAllNowProperties(temArr).then((rs) => {
+        queryAllNowProperties(temArr.map(i=>({...i,tslPropertyIDs:undefined}))).then((rs) => {
           const { data } = rs;
           updateEditor(data.payload?.results, nvTemNodes);
+        }).catch(()=>{
+          queryAllNowProperties(temArr.map(i=>({...i,identifiers:undefined}))).then((rs) => {
+            const { data } = rs;
+            updateEditor(data.payload?.results, nvTemNodes);
+          });
         });
         subProps.current = subscribeProperty({
           id: subscribeID,
-          req: temArr,
+          req: temArr.map(i=>({...i,tslPropertyIDs:undefined})),
         }).subscribe((response) => {
           const { data } = response;
           updateEditor(data.payload?.results, nvTemNodes);
+        },(e)=>{
+          if(e.message?.includes("identifiers")){
+            subProps.current = subscribeProperty({
+              id: subscribeID,
+              req: temArr.map(i=>({...i,identifiers:undefined})),
+            }).subscribe((response) => {
+              const { data } = response;
+              updateEditor(data.payload?.results, nvTemNodes);
+            });
+          }
         });
       }
     }
@@ -1028,17 +1047,18 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
   // 实时更改数据
   const updateEditor = (
     data: {
-        identifier: string;
+        identifier?: string;
         deviceID: string;
         value: any;
+        tslPropertyID?:string;
       }[],
     arrNodes: any[]
   ) => {
     data?.forEach(
-      (rs: { identifier: any; deviceID: any; value: any }) => {
+      (rs: { identifier?: any; deviceID: any; value: any ,tslPropertyID?:string}) => {
         arrNodes?.forEach((model: any) => {
           if (
-            model.a("tslProperty")?.identifier === rs.identifier &&
+           (model.a("tslProperty")?.identifier === rs.identifier||model.a("tslProperty")?.tslPropertyId === rs.tslPropertyID) &&
             model.a("tslProperty")?.deviceId === rs.deviceID
           ) {
             if (model.a("JSFunc") && model.a("JSFuncCheck")) {
@@ -1199,8 +1219,9 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
             }
           }
           if (
-             model.a("showRuleTslProperty")?.identifier ===
-            rs.identifier &&
+             (model.a("showRuleTslProperty")?.identifier ===
+             rs.identifier||model.a("showRuleTslProperty")?.tslPropertyId ===
+             rs.tslPropertyID) &&
             model.a("showRuleTslProperty")?.deviceId === rs.deviceID &&
             model.a("show") === "ruleShow"
           ) {
