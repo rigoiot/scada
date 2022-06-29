@@ -1330,7 +1330,7 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
               )}
             </div>
           </div>
-          <div ref={DivRef} className={styles.canvas}></div>
+          <div ref={DivRef} className={styles.monitorCanvas}></div>
         </div>
       </Spin>
       {visible && (
