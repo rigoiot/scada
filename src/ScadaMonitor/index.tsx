@@ -74,26 +74,22 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
 
   // iframe
   ht.Default.setImage("iframe", {
-    width: 500,
-    height: 500,
     pixelPerfect: false,
     scrollable: true,
     interactive: true,
-    renderHTML: function (data, gv, cache) {
+    renderHTML: (data, gv, cache)=> {
+      const dataType=data.a("type");
       if (!cache.htmlView) {
-        const div = (cache.htmlView = document.createElement("div")),
-          iframe = (cache.iframe = document.createElement("iframe"));
+        const div = cache.htmlView = document.createElement("div"),
+          iframe = cache.iframe = document.createElement(["textIndicator","img"].includes(dataType)?"img":"iframe");
         iframe.style.position = "absolute";
         iframe.style.width = "100%";
         iframe.style.height = "100%";
-
         div.appendChild(iframe);
         div.style.position = "absolute";
-        div.layoutHTML = function () {
-          gv.layoutHTML(data, div, true);
-        };
+        div.layoutHTML =()=>gv.layoutHTML(data, div, true);
       }
-      const url = data.a("iframeUrl");
+      const url =dataType=== "textIndicator"?data.a("img")|| data.a("textData")[0]?.label:dataType=== "img"?data.a("img"):data.a("iframeUrl");
       if (url && url !== cache.url) {
         cache.iframe.src = cache.url = url;
       }
@@ -1213,7 +1209,9 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
                     .filter((res) => {
                       return res !== undefined;
                     })[0];
-                  model.setImage(decodeURIComponent(img));
+                    model.a("img",decodeURIComponent(img));
+                    const suffix =img.substring(decodeURIComponent(img).lastIndexOf(".")+1);
+                    model.setImage(suffix==="gif"?"iframe":decodeURIComponent(img));
                 }
                 break;
             }

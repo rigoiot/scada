@@ -679,6 +679,33 @@ const Index: React.FC<ScadaEditorProps> = (props) => {
   const viewPropertysRef = useRef<any>({});
   const viewRef = useRef();
   const oldModelData = useRef<any>("");
+
+  // gif
+  ht.Default.setImage("iframe", {
+    pixelPerfect: false,
+    scrollable: true,
+    interactive: true,
+    renderHTML: (data, gv, cache)=> {
+      const dataType=data.a("type");
+      if (!cache.htmlView) {
+        const div = (cache.htmlView = document.createElement("div")),
+          iframe = (cache.iframe = document.createElement(["textIndicator","img"].includes(dataType)?"img":"iframe"));
+        iframe.style.position = "absolute";
+        iframe.style.width = "100%";
+        iframe.style.height = "100%";
+        div.appendChild(iframe);
+        div.style.position = "absolute";
+        div.layoutHTML =()=>gv.layoutHTML(data, div, true);
+      }
+      const url =dataType=== "textIndicator"?data.a("img")|| data.a("textData")[0]?.label:dataType=== "img"?data.a("img"):data.a("iframeUrl");
+      if (url && url !== cache.url) {
+        cache.iframe.src = cache.url = url;
+      }
+      return cache.htmlView;
+    },
+    comps: [],
+  });
+
   // 用户图库
   const getScadaUserComponents = () => {
     queryCurrent().then((rs) => {
@@ -2158,8 +2185,10 @@ const Index: React.FC<ScadaEditorProps> = (props) => {
           node.setImage(require("./editor/indicator.json"));
           break;
         case "img":
-          /^http/.test(value.textData[0]?.label) &&
-            node.setImage(decodeURIComponent(value.textData[0]?.label));
+           if(/^http/.test(value.textData[0]?.label)){
+            const suffix =value.textData[0]?.label.substring(value.textData[0]?.label.lastIndexOf(".")+1);
+            node.setImage(suffix==="gif"?"iframe":decodeURIComponent(value.textData[0]?.label));
+           }
           break;
       }
     }
@@ -2171,8 +2200,9 @@ const Index: React.FC<ScadaEditorProps> = (props) => {
   };
   const imgModalSubmit = (value: any, node: any) => {
     if (value.img) {
-      node.setImage(decodeURIComponent(value.img));
+      const suffix =value.img.substring(value.img.lastIndexOf(".")+1);
       node.a("img", decodeURIComponent(value.img));
+      node.setImage(suffix==="gif"?"iframe":decodeURIComponent(value.img));
     }
     node.a("show", value.show || "show");
     node.a("showRule", {
