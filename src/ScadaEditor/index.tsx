@@ -2325,6 +2325,8 @@ const Index: React.FC<ScadaEditorProps> = (props) => {
                 ruleTwo: value.ruleTwo,
               });
               publicDataValue(value, data);
+              const temImage=scadaComponents.map(rs=>rs.items).flat().find(rs=>rs.componentType===data.a("type"));
+              temImage&&data.a("img", temImage.image);
               if (data.a("type") === "chart" || data.a("type") === "barChart") {
                 data.a("chartType", value.chartType);
                 data.a("chartColor", value.chartColor || "#0070cc");
