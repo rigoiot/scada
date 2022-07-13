@@ -524,7 +524,7 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
                 times.length !== i.points.length &&
                   times.push(moment(rs.time).format("MM-DD HH:mm:ss"));
                 values.push({
-                  value: Number(
+                  value: rs.value==null?null: Number(
                     ((rs.value && rs.value * j.chartNum) || 0).toFixed(3)
                   ),
                   chartNum: j.chartNum,
