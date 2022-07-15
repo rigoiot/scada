@@ -95,7 +95,6 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
         if (url && url !== cache.url) {
           cache.iframe.src = cache.url = url;
         }
-        console.log(cache.htmlView);
         return cache.htmlView;
       },
       comps: [],
