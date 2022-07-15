@@ -680,31 +680,34 @@ const Index: React.FC<ScadaEditorProps> = (props) => {
   const viewRef = useRef();
   const oldModelData = useRef<any>("");
 
-  // gif
-  ht.Default.setImage("iframe", {
-    pixelPerfect: false,
-    scrollable: true,
-    interactive: true,
-    renderHTML: (data, gv, cache)=> {
-      const dataType=data.a("type");
-      if (!cache.htmlView) {
-        const div = (cache.htmlView = document.createElement("div")),
-          iframe = (cache.iframe = document.createElement(["textIndicator","img"].includes(dataType)?"img":"iframe"));
-        iframe.style.position = "absolute";
-        iframe.style.width = "100%";
-        iframe.style.height = "100%";
-        div.appendChild(iframe);
-        div.style.position = "absolute";
-        div.layoutHTML =()=>gv.layoutHTML(data, div, true);
-      }
-      const url =dataType=== "textIndicator"?data.a("img")|| data.a("textData")[0]?.label:dataType=== "img"?data.a("img"):data.a("iframeUrl");
-      if (url && url !== cache.url) {
-        cache.iframe.src = cache.url = url;
-      }
-      return cache.htmlView;
-    },
-    comps: [],
-  });
+  const htDefaultImg=()=>{
+    // gif
+    ht.Default.setImage("iframe",{
+      pixelPerfect: false,
+      scrollable: true,
+      interactive: true,
+      renderHTML: (data, gv, cache)=> {
+        const dataType=data.a("type");
+        if (!cache.htmlView) {
+          const div = (cache.htmlView = document.createElement("div")),
+            iframe = (cache.iframe = document.createElement(["textIndicator","img","gif"].includes(dataType)?"img":"iframe"));
+          iframe.style.position = "absolute";
+          iframe.style.width = "100%";
+          iframe.style.height = "100%";
+          div.appendChild(iframe);
+          div.style.position = "absolute";
+          ["textIndicator","img","gif"].includes(dataType)&&(div.style.pointerEvents="none");
+          div.layoutHTML =()=>gv.layoutHTML(data, div, true);
+        }
+        const url =dataType=== "textIndicator"?data.a("img")|| data.a("textData")[0]?.label:["img","gif"].includes(dataType)?data.a("img"):data.a("iframeUrl");
+        if (url && url !== cache.url) {
+          cache.iframe.src = cache.url = url;
+        }
+        return cache.htmlView;
+      },
+      comps: [],
+    });
+  }
 
   // 用户图库
   const getScadaUserComponents = () => {
@@ -738,6 +741,7 @@ const Index: React.FC<ScadaEditorProps> = (props) => {
   };
 
   useEffect(() => {
+    htDefaultImg();
     queryScadaGroups({
       isBase: true,
       code: system === "station" ? "station" : undefined,
@@ -1149,7 +1153,7 @@ const Index: React.FC<ScadaEditorProps> = (props) => {
           draggable: item.draggable === undefined ? true : item.draggable,
         });
         node.a("type", item.componentType || item.userComponentType);
-        switch (item.componentType) {
+        switch (item.componentType || item.userComponentType) {
           case "Text":
             node.s({
               text: "T_",
@@ -1704,7 +1708,7 @@ const Index: React.FC<ScadaEditorProps> = (props) => {
       node.a("type", paletteNode.a("type"));
       node.setLayer(1);
       node.s("image.stretch", "uniform");
-      switch (item.componentType) {
+      switch (item.componentType || item.userComponentType) {
         case "video":
           node.setImage(require("../asset/video.png"));
           node.setWidth(400);
@@ -1840,6 +1844,10 @@ const Index: React.FC<ScadaEditorProps> = (props) => {
           node.a("dataFormat", "##.#");
           node.setImage(image);
           node.setTag(item.tag);
+          break;
+        case "gif":
+          node.a("img", item.image);
+          node.setImage("iframe");
           break;
         default:
           node.setImage(image);
@@ -2380,16 +2388,12 @@ const Index: React.FC<ScadaEditorProps> = (props) => {
             data.setWidth(data.getWidth());
             data.setHeight(data.getHeight());
             const Image = val.selectData?.getImage();
+            const imgUrl=val.selectData?.item?.[val.selectData?.item?.userComponentData?"userComponentData":"componentData"]?.split("?")[0];
             if (typeof Image === "object" && val.selectData) {
-              val.selectData?.item?.userComponentData
-                ? data.setImage(
-                    val.selectData?.item?.userComponentData?.split("?")[0]
-                  )
-                : data.setImage(
-                    val.selectData?.item?.componentData?.split("?")[0]
-                  );
+              data.setImage(imgUrl);
             } else if (val.selectData) {
-              data.setImage(Image);
+              val.selectData.a("type")==="gif"&& data.a("img",Image);
+              data.setImage(val.selectData.a("type")==="gif" ? "iframe" : Image);
             }
             data.a("type", val.selectData?.a("type") || val.type);
             data.a("show", val.show || "show");

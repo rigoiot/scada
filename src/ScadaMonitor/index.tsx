@@ -72,33 +72,38 @@ const ScadaMonitor = (props: ScadaMonitorProps) => {
   const hlsRef = useRef<any>([]);
   const pageTimerRef = useRef({});
 
-  // iframe
-  ht.Default.setImage("iframe", {
-    pixelPerfect: false,
-    scrollable: true,
-    interactive: true,
-    renderHTML: (data, gv, cache)=> {
-      const dataType=data.a("type");
-      if (!cache.htmlView) {
-        const div = cache.htmlView = document.createElement("div"),
-          iframe = cache.iframe = document.createElement(["textIndicator","img"].includes(dataType)?"img":"iframe");
-        iframe.style.position = "absolute";
-        iframe.style.width = "100%";
-        iframe.style.height = "100%";
-        div.appendChild(iframe);
-        div.style.position = "absolute";
-        div.layoutHTML =()=>gv.layoutHTML(data, div, true);
-      }
-      const url =dataType=== "textIndicator"?data.a("img")|| data.a("textData")[0]?.label:dataType=== "img"?data.a("img"):data.a("iframeUrl");
-      if (url && url !== cache.url) {
-        cache.iframe.src = cache.url = url;
-      }
-      return cache.htmlView;
-    },
-    comps: [],
-  });
+  const htDefaultImg=()=>{
+    // gif
+    ht.Default.setImage("iframe",{
+      pixelPerfect: false,
+      scrollable: true,
+      interactive: true,
+      renderHTML: (data, gv, cache)=> {
+        const dataType=data.a("type");
+        if (!cache.htmlView) {
+          const div = (cache.htmlView = document.createElement("div")),
+            iframe = (cache.iframe = document.createElement(["textIndicator","img","gif"].includes(dataType)?"img":"iframe"));
+          iframe.style.position = "absolute";
+          iframe.style.width = "100%";
+          iframe.style.height = "100%";
+          div.appendChild(iframe);
+          div.style.position = "absolute";
+          ["textIndicator","img","gif"].includes(dataType)&&(div.style.pointerEvents="none");
+          div.layoutHTML =()=>gv.layoutHTML(data, div, true);
+        }
+        const url =dataType=== "textIndicator"?data.a("img")|| data.a("textData")[0]?.label:["img","gif"].includes(dataType)?data.a("img"):data.a("iframeUrl");
+        if (url && url !== cache.url) {
+          cache.iframe.src = cache.url = url;
+        }
+        console.log(cache.htmlView);
+        return cache.htmlView;
+      },
+      comps: [],
+    });
+  }
 
   useEffect(() => {
+    htDefaultImg();
     message.config({
       getContainer: () => document.getElementById("canvas"),
     });
